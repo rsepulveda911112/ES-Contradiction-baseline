@@ -1,5 +1,5 @@
-from src.model.beto_model import train_predict_model
-from src.common.loadData import load_all_data
+from model.beto_model import train_predict_model
+from common.loadData import load_all_data
 from sklearn.model_selection import KFold
 
 

@@ -1,5 +1,5 @@
 import os
-from src.common.reader import JSONLineReader
+from common.reader import JSONLineReader
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 labelencoder = LabelEncoder()

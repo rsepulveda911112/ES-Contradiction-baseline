@@ -1,8 +1,9 @@
-from src.common.score import scorePredict
+from common.score import scorePredict
 import pandas as pd
 import numpy as np
 from sklearn.metrics import accuracy_score
-from simpletransformers.classification.classification_model import ClassificationModel
+from model.ClassificationModel import ClassificationModel
+#from simpletransformers.classification.classification_model import ClassificationModel
 
 TransformerModel = ClassificationModel
 
@@ -21,8 +22,10 @@ def train_predict_model(df_train, df_test, is_predict, use_cuda):
                             'train_batch_size': 4,
                             'eval_batch_size': 4,
                             'max_seq_length': 512,
-                            'fp16': True,
-                            'fp16_opt_level': 'O1'})
+                            'multiprocessing_chunksize': 500,
+                            'fp16': True})
+    # ,
+    # 'fp16_opt_level': 'O1'
     model.train_model(df_train)
 
     results = ''
