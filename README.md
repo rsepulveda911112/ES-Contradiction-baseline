@@ -31,39 +31,42 @@ mkdir data
 * Download ES-Contradiction-dataset from zenodo and copy in this folder:
 https://zenodo.org/record/4586766#.YEelgFNKi-I
 
+
+### Description of the parameters
+These parameters allow configuring the system to train or predict.
+
+|Field|Description|
+|---|---|
+|label_to_exclude|This parameter should be used if you want to execute experiments with fewer classes.|
+|is_type_contradiction|This parameter should be True if you want to train with contradiction type labels.|
+|use_cuda|This parameter should be True if cuda is present.|
+|is_cross_validation|This parameter should be True if you want to make a cross-validation.|
+|training_set|This parameter is the relative dir of training set.|
+|test_set|This parameter is the relative dir of test set.|
+|model_dir|This parameter is the relative dir of model for predict.|
+
+For example, if you want to predict only Compatible and Contradiction use this configuration:
+```bash
+--label_to_exclude ['unrelated']
+```
+For example, if you want to predict only type of contradiction:
+```bash
+--is_type_contradiction True
+```
+
 ### Train and predict ES-Contradiction-dataset
 Execute this command to train and predict on the dataset
 ```bash
-PYTHONPATH=src python src/scripts/train_predict.py
+PYTHONPATH=src python src/scripts/train_predict.py --training_set "/data/ES_Contradiction_train_v1.json" --test_set "/data/ES_Contradiction_test_v1.json"
 ```
 
 ### Train and predict with cross-validation
 Execute this command to make cross-validation in training set of ES-Contradiction-dataset
 ```bash
-PYTHONPATH=src python src/scripts/train_predict_cross.py
+PYTHONPATH=src python src/scripts/train_predict.py --is_cross_validation True 
 ```
 
-### Description of the parameters
-These parameters allow configuring the system to train.
 
-|Field|Description|
-|---|---|
-|label_to_exclude|This parameter should be used if you want to execute experiments with fewer classes.|
-|is_type_contradiction|This parameter should be True if you want to train with contradiction type labels..|
-|use_cuda|This parameter should be True if cuda is present.|
-|is_predict|This parameter should be True if you want to predict and False if you want evaluate.|
-
-
-For example, if you want to predict only Compatible and Contradiction use this configuration:
-```python
-label_to_exclude = ['unrelated']
-```
-
-For example, if you want to predict only type of contradiction:
-```python
-is_type_contradiction = True
-label_to_exclude = ['none']
-```
 
 ### Contacts:
 If you have any questions please contact the authors.
