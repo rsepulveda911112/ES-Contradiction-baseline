@@ -21,7 +21,8 @@ def train_predict_model(df_train, df_test, is_predict, use_cuda):
                                 'eval_batch_size': 4,
                                 'max_seq_length': 512,
                                 'multiprocessing_chunksize': 500,
-                                'fp16': True})
+                                'fp16': True,
+                                'fp16_opt_level': 'O1'})
 
     model.train_model(df_train)
 
@@ -37,7 +38,6 @@ def train_predict_model(df_train, df_test, is_predict, use_cuda):
         results = result['acc']
     y_predict = np.argmax(model_outputs_test, axis=1)
     print(scorePredict(y_predict, labels_test, labels))
-
     return results
 
 

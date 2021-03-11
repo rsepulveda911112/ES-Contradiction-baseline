@@ -9,14 +9,11 @@ def main(parser):
 
     is_type_contradiction = args.is_type_contradiction
     use_cuda = args.use_cuda
-    print(use_cuda)
     is_cross_validation = args.is_cross_validation
     training_set = args.training_set
     test_set = args.test_set
     model_dir = args.model_dir
-    # label_to_exclude = ['unrelated']
     label_to_exclude = args.label_to_exclude
-    print(label_to_exclude)
 
     if model_dir == "":
         df_train = load_all_data(training_set, is_type_contradiction, label_to_exclude)
@@ -74,6 +71,7 @@ if __name__ == '__main__':
                         help="This parameter is the relative dir of model for predict.")
 
     parser.add_argument('--label_to_exclude',
+                        default=[],
                         nargs='+',
                         help="This parameter should be used if you want to execute experiments with fewer classes.")
     main(parser)
