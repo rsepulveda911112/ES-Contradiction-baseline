@@ -32,7 +32,8 @@ def main(parser):
             df_test = load_all_data(test_set, is_type_contradiction, label_to_exclude)
             train_predict_model(df_train, df_test, is_cross_validation, use_cuda)
     else:
-        predict(test_set, use_cuda, model_dir)
+        df_test = load_all_data(test_set, is_type_contradiction, label_to_exclude)
+        predict(df_test, use_cuda, model_dir)
 
 
 
