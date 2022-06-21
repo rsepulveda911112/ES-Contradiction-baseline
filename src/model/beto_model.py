@@ -2,14 +2,21 @@ import os
 from common.score import scorePredict
 import pandas as pd
 import numpy as np
+import wandb
 from sklearn.metrics import accuracy_score
 from simpletransformers.classification.classification_model import ClassificationModel
 
 
-def train_predict_model(df_train, df_test, is_predict, use_cuda):
+def train_predict_model(df_train, df_test, is_predict, use_cuda, wandb_project=None, wandb_config=None):
     labels_test = pd.Series(df_test['labels']).to_numpy()
     labels = list(df_train['labels'].unique())
     labels.sort()
+
+    if wandb_config:
+        wandb.init(project=wandb_project, config=wandb_config)
+    elif wandb_project:
+        wandb.init(project=wandb_project, config=wandb.config)
+
     model = ClassificationModel('bert', 'dccuchile/bert-base-spanish-wwm-cased',
                                  num_labels=len(labels), use_cuda=use_cuda, args={
                                 'learning_rate':2e-5,
@@ -20,9 +27,12 @@ def train_predict_model(df_train, df_test, is_predict, use_cuda):
                                 'train_batch_size': 4,
                                 'eval_batch_size': 4,
                                 'max_seq_length': 512,
-                                'multiprocessing_chunksize': 500,
+                                'multiprocessing_chunksize': 10,
                                 'fp16': True,
-                                'fp16_opt_level': 'O1'})
+                                'fp16_opt_level': 'O1',
+                                'tensorboard_dir': 'tensorboard',
+                                'wandb_project': wandb_project})
+
 
     model.train_model(df_train)
 
